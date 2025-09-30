@@ -1,209 +1,211 @@
-# FHEVM Message Board DApp
+# Zama FHEVM Message Board DApp
 
-一个基于FHEVM的隐私保护链上留言板DApp，用户可以在区块链上发布加密留言，确保隐私性和不可篡改性。
+**Privacy-First Blockchain Messaging**
 
-## 功能特性
+This innovative DApp demonstrates fully homomorphic encryption (FHE) on Ethereum via FHEVM. Users can post encrypted messages permanently stored on-chain, with content remaining private even from blockchain validators.
 
-- 🔐 **隐私保护**: 使用FHEVM技术加密留言内容，确保只有授权用户能查看
-- 📝 **链上存储**: 留言永久保存在区块链上，不可篡改
-- 🎨 **美观界面**: 现代化的渐变设计和卡片式布局
-- ⚡ **实时更新**: 支持实时加载和刷新留言
-- 🔗 **钱包集成**: 完整的MetaMask集成和网络切换
+## ✨ Key Features
 
-## 技术栈
+- 🔐 **End-to-End Privacy**: Messages encrypted using FHEVM, decrypted only by authorized users
+- 📝 **Immutable Storage**: Messages permanently stored on blockchain, tamper-proof
+- 🎨 **Modern UI**: Beautiful gradient design with card-based layout and dark mode
+- ⚡ **Real-time Updates**: Live message loading and refresh capabilities
+- 🔗 **Wallet Integration**: Full MetaMask integration with network switching
 
-### 后端 (智能合约)
-- **Solidity**: 智能合约开发
-- **FHEVM**: 完全同态加密虚拟机
-- **Hardhat**: 合约编译和部署工具
-- **SepoliaConfig**: FHEVM网络配置
+## 🏗️ Tech Stack
 
-### 前端
-- **Next.js 15**: React框架
-- **TypeScript**: 类型安全的JavaScript
-- **Tailwind CSS**: 现代化CSS框架
-- **@zama-fhe/relayer-sdk**: FHEVM Relayer SDK
-- **@fhevm/mock-utils**: 本地开发模拟工具
-- **ethers.js**: 以太坊交互库
+### Backend (Smart Contracts)
+- **Solidity**: Smart contract development
+- **FHEVM**: Fully Homomorphic Encryption Virtual Machine
+- **Hardhat**: Contract compilation and deployment
+- **SepoliaConfig**: FHEVM network configuration
 
-## 项目结构
+### Frontend
+- **Next.js 15**: React framework with App Router
+- **TypeScript**: Type-safe JavaScript development
+- **Tailwind CSS**: Modern utility-first CSS framework
+- **@zama-fhe/relayer-sdk**: FHEVM Relayer SDK for production
+- **@fhevm/mock-utils**: Local development mock utilities
+- **ethers.js**: Ethereum blockchain interaction
+
+## 📁 Project Structure
 
 ```
-zama_msg_board/
-├── fhevm-hardhat-template/          # 智能合约项目
-│   ├── contracts/MessageBoard.sol   # 留言板合约
-│   ├── deploy/                      # 部署脚本
-│   └── test/                        # 合约测试
-├── frontend/                        # Next.js前端应用
+zama-msg-board-fhevm/
+├── fhevm-hardhat-template/          # Smart contract project
+│   ├── contracts/MessageBoard.sol   # Main message board contract
+│   ├── deploy/                      # Deployment scripts
+│   └── test/                        # Contract tests
+├── frontend/                        # Next.js frontend application
 │   ├── components/
-│   │   ├── MessageBoardDemo.tsx     # 主留言板组件
-│   │   └── ErrorNotDeployed.tsx     # 错误处理组件
+│   │   ├── MessageBoardDemo.tsx     # Main message board component
+│   │   └── ErrorNotDeployed.tsx     # Error handling component
 │   ├── hooks/
-│   │   ├── useMessageBoard.tsx      # 留言板业务逻辑
-│   │   └── useMetaMaskEthersSigner.tsx # 钱包连接
-│   ├── abi/                         # 生成的合约ABI
-│   └── fhevm/                       # FHEVM工具和类型
-└── Fhevm0.8_Reference.md            # FHEVM开发参考文档
+│   │   ├── useMessageBoard.tsx      # Message board business logic
+│   │   └── useMetaMaskEthersSigner.tsx # Wallet connection hook
+│   ├── abi/                         # Generated contract ABIs
+│   └── fhevm/                       # FHEVM utilities and types
+└── Fhevm0.8_Reference.md            # FHEVM development reference
 ```
 
-## 智能合约功能
+## 📋 Smart Contract Features
 
-### MessageBoard.sol 合约特性
+### MessageBoard.sol Contract
 
 ```solidity
 contract MessageBoard is SepoliaConfig {
     struct Message {
         address author;
         uint256 timestamp;
-        euint256 title;      // 加密标题
-        euint256 content;    // 加密内容
+        euint256 title;      // Encrypted title
+        euint256 content;    // Encrypted content
         bool exists;
     }
 
-    // 核心功能
-    function addMessage(...) external;        // 添加留言
-    function getMessageMetadata(...) external view; // 获取元数据
-    function getMessageTitle(...) external view;     // 获取加密标题
-    function getMessageContent(...) external view;   // 获取加密内容
-    function requestMessageDecryption(...) external; // 请求解密
+    // Core functions
+    function addMessage(...) external;        // Add message
+    function getMessageMetadata(...) external view; // Get metadata
+    function getMessageTitle(...) external view;     // Get encrypted title
+    function getMessageContent(...) external view;   // Get encrypted content
+    function requestMessageDecryption(...) external; // Request decryption
 }
 ```
 
-### 隐私保护机制
+### Privacy Protection Mechanism
 
-1. **加密输入**: 留言标题和内容在客户端加密后发送到链上
-2. **访问控制**: 使用FHEVM的ACL系统控制谁能解密留言
-3. **临时授权**: 支持为特定用户临时授权查看留言
-4. **签名验证**: 通过Relayer验证解密请求的合法性
+1. **Encrypted Input**: Messages are encrypted client-side before sending to blockchain
+2. **Access Control**: FHEVM ACL system controls who can decrypt messages
+3. **Temporary Authorization**: Support for temporary access grants to other users
+4. **Signature Verification**: Relayer validates decryption request legitimacy
 
-## 快速开始
+## 🚀 Quick Start
 
-### 环境要求
+### Prerequisites
 
 - Node.js >= 20
 - npm >= 7.0.0
-- MetaMask浏览器扩展
-- 本地Hardhat节点 (用于开发)
+- MetaMask browser extension
+- Local Hardhat node (for development)
 
-### 安装和运行
+### Installation & Setup
 
-1. **克隆项目**
+1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd zama_msg_board
+   git clone https://github.com/BearMelon/zama-msg-board-fhevm.git
+   cd zama-msg-board-fhevm
    ```
 
-2. **安装合约依赖**
+2. **Install contract dependencies**
    ```bash
    cd fhevm-hardhat-template
    npm install
    ```
 
-3. **安装前端依赖**
+3. **Install frontend dependencies**
    ```bash
    cd ../frontend
    npm install
    ```
 
-4. **启动本地Hardhat节点**
+4. **Start local Hardhat node**
    ```bash
    cd ../fhevm-hardhat-template
    npx hardhat node
    ```
 
-5. **部署合约** (新终端)
+5. **Deploy contracts** (new terminal)
    ```bash
    cd fhevm-hardhat-template
    npx hardhat deploy --network localhost --tags MessageBoard
    ```
 
-6. **生成ABI**
+6. **Generate ABIs**
    ```bash
    cd ../frontend
    npm run gen-messageboard-abi
    ```
 
-7. **启动前端开发服务器**
+7. **Start frontend dev server**
    ```bash
    npm run dev:mock
    ```
 
-8. **访问应用**
-   打开浏览器访问 `http://localhost:3000`
+8. **Access the application**
+   Open browser to `http://localhost:3000`
 
-## 使用说明
+## 📖 Usage Guide
 
-### 连接钱包
+### Connect Wallet
 
-1. 点击"🔗 Connect to MetaMask"按钮
-2. 在MetaMask中批准连接请求
-3. 确保连接到本地Hardhat网络 (localhost:8545)
+1. Click "🔗 Connect to MetaMask" button
+2. Approve connection request in MetaMask
+3. Ensure connected to local Hardhat network (localhost:8545)
 
-### 发布留言
+### Post Messages
 
-1. 在"Title"字段输入留言标题
-2. 在"Content"字段输入留言内容
-3. 点击"📝 Post Message"按钮
-4. 等待交易确认
+1. Enter message title in "Title" field
+2. Enter message content in "Content" field
+3. Click "📝 Post Message" button
+4. Wait for transaction confirmation
 
-### 查看留言
+### View Messages
 
-1. 留言列表会自动加载显示
-2. 点击"🔄 Refresh"按钮手动刷新
-3. 点击"🔓 Decrypt Message"查看加密留言内容
+1. Message list loads automatically
+2. Click "🔄 Refresh" to manually refresh
+3. Click "🔓 Decrypt Message" to view encrypted content
 
-## 开发模式 vs 生产模式
+## 🔧 Development vs Production Mode
 
-### 开发模式 (Mock)
-- 使用 `@fhevm/mock-utils` 本地模拟
-- 无需真实的FHEVM网络
-- 适合快速开发和测试
-- 命令: `npm run dev:mock`
+### Development Mode (Mock)
+- Uses `@fhevm/mock-utils` for local simulation
+- No real FHEVM network required
+- Perfect for rapid development and testing
+- Command: `npm run dev:mock`
 
-### 生产模式
-- 使用真实的 `@zama-fhe/relayer-sdk`
-- 连接到FHEVM网络 (Sepolia测试网)
-- 需要FHEVM Relayer服务
-- 命令: `npm run dev`
+### Production Mode
+- Uses real `@zama-fhe/relayer-sdk`
+- Connects to FHEVM network (Sepolia testnet)
+- Requires FHEVM Relayer service
+- Command: `npm run dev`
 
-## FHEVM集成详解
+## 🔐 FHEVM Integration Details
 
-### SDK初始化流程
+### SDK Initialization Flow
 
 ```typescript
-// 1. 加载SDK
+// 1. Load SDK
 await fhevmLoadSDK();
 
-// 2. 初始化SDK
+// 2. Initialize SDK
 await fhevmInitSDK();
 
-// 3. 创建FHEVM实例
+// 3. Create FHEVM instance
 const instance = await relayerSDK.createInstance(config);
 ```
 
-### 加密输入处理
+### Encrypted Input Processing
 
 ```typescript
-// 创建加密输入
+// Create encrypted input
 const input = instance.createEncryptedInput(contractAddress, signerAddress);
-input.add256(BigInt(value));
+input.add32(BigInt(value));
 
-// 加密
+// Encrypt
 const encrypted = await input.encrypt();
 
-// 发送到合约
+// Send to contract
 await contract.addMessage(encrypted.handles[0], encrypted.inputProof);
 ```
 
-### 解密流程
+### Decryption Flow
 
 ```typescript
-// 1. 获取解密签名
+// 1. Get decryption signature
 const sig = await FhevmDecryptionSignature.loadOrSign(
   instance, [contractAddress], signer, storage
 );
 
-// 2. 请求解密
+// 2. Request decryption
 const result = await instance.userDecrypt(
   [{ handle, contractAddress }],
   sig.privateKey, sig.publicKey, sig.signature,
@@ -211,35 +213,42 @@ const result = await instance.userDecrypt(
   sig.startTimestamp, sig.durationDays
 );
 
-// 3. 获取明文
+// 3. Get plaintext
 const clearValue = result[handle];
 ```
 
-## 安全考虑
+## 🛡️ Security Considerations
 
-1. **访问控制**: 只有留言作者能解密自己的留言
-2. **临时授权**: 支持为其他用户临时授权查看
-3. **重放保护**: 解密请求包含时间戳和签名验证
-4. **网络安全**: 合约在FHEVM上运行，提供额外的安全层
+1. **Access Control**: Only message authors can decrypt their own messages
+2. **Temporary Authorization**: Support for temporary access grants to other users
+3. **Replay Protection**: Decryption requests include timestamp and signature validation
+4. **Network Security**: Contracts run on FHEVM, providing additional security layer
 
-## 扩展功能
+## 🚀 Deployment Status
 
-- [ ] 支持图片上传
-- [ ] 留言点赞功能
-- [ ] 用户声誉系统
-- [ ] 留言搜索功能
-- [ ] 多语言支持
+- ✅ **Smart Contract**: Deployed on Sepolia testnet
+- ✅ **Contract Address**: `0x673B3b40fc67b78ef9CB5d95b902Ea6c4531212A`
+- ✅ **Frontend**: Static export ready for hosting
+- ✅ **GitHub Repository**: https://github.com/BearMelon/zama-msg-board-fhevm
 
-## 贡献
+## 🔮 Future Enhancements
 
-欢迎提交Issue和Pull Request来改进这个项目！
+- [ ] Image upload support
+- [ ] Message liking system
+- [ ] User reputation system
+- [ ] Message search functionality
+- [ ] Multi-language support
 
-## 许可证
+## 🤝 Contributing
+
+Issues and Pull Requests are welcome to improve this project!
+
+## 📄 License
 
 BSD-3-Clause-Clear License
 
-## 致谢
+## 🙏 Acknowledgments
 
-- [Zama](https://zama.ai/) - FHEVM技术提供者
-- [FHEVM Documentation](https://docs.zama.ai/fhevm) - 官方文档
-- [fhevm-react-template](https://github.com/zama-ai/fhevm-react-template) - 项目模板
+- [Zama](https://zama.ai/) - FHEVM technology provider
+- [FHEVM Documentation](https://docs.zama.ai/fhevm) - Official documentation
+- [fhevm-react-template](https://github.com/zama-ai/fhevm-react-template) - Project template
